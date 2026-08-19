@@ -1,0 +1,1 @@
+{"version":"v1","stages":["file-validation","document-act-classification","image-ocr","characters-identities","questions-answers","events-claims-conflicts","props-clues-evidence","reasoning-timeline","dm-hints","endings-character-knowledge","player-board-selection","board-layout","spoiler-consistency","save-notify"]}

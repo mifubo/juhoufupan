@@ -1,0 +1,15 @@
+node_modules/
+dist/
+coverage/
+.env
+.env.*
+!.env.example
+storage/
+tmp/
+uploads/
+generated/
+*.docx
+*.pdf
+.local-data/
+*.log
+.DS_Store
