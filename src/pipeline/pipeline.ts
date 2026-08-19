@@ -14,7 +14,7 @@ import {
   TaskState,
 } from '../domain/entities';
 import { assertTransition } from '../domain/rules';
-import { MockAIProvider } from '../providers/providers';
+import { AIProvider, KimiProvider, MockAIProvider } from '../providers/providers';
 
 export const PIPELINE_QUEUE = 'generation';
 export const STAGES = [
@@ -82,7 +82,14 @@ export class PipelineProcessor extends WorkerHost {
     if (task.state !== TaskState.QUEUED) return;
     task.state = TaskState.RUNNING;
     await this.tasks.save(task);
-    const ai = new MockAIProvider();
+    const ai: AIProvider =
+      process.env.AI_PROVIDER === 'kimi'
+        ? new KimiProvider(
+            process.env.KIMI_API_KEY!,
+            process.env.KIMI_BASE_URL!,
+            process.env.KIMI_MODEL!,
+          )
+        : new MockAIProvider();
     for (let i = task.stage; i < STAGES.length; i++) {
       const started = Date.now();
       const result = await ai.chat({
